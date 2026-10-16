@@ -2,7 +2,7 @@ import motor, sys, time
 from Grabber import app
 from config import OWNER_ID
 from pyrogram import filters, enums
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from Grabber.core.mongo import usersdb, waifusdb, chatsdb
 
 # --------------------------------------- Chat Watcher --------------------------------------- #
@@ -12,13 +12,11 @@ start_time = time.time()
 @app.on_message(group=10)
 async def chat_watcher_func(_, message):
     try:
-        # ---------------- User Save ---------------- #
         if message.from_user:
             user_id = message.from_user.id
             if not await usersdb.is_user_exist(user_id):
                 await usersdb.add_user(user_id)
 
-        # ---------------- Chat Save ---------------- #
         if message.chat:
             chat_id = message.chat.id
             if not await chatsdb.is_chat_exist(chat_id):
@@ -54,14 +52,13 @@ def time_formatter():
 
 @app.on_message(filters.command("start"))
 async def start(client, message):
-    # ခလုတ်အားလုံးကို url parameter သုံးပြီး သီးသန့်လင့်ခ်ချိတ်ပေးထားခြင်း
     keyboard = InlineKeyboardMarkup([
         [
             InlineKeyboardButton("➕ Add Me To Your Group", url=f"https://t.me/{client.me.username}?startgroup=true")
         ],
         [
-            InlineKeyboardButton("✨ Support", url="https://t.me/Social_IT_Service"),
-            InlineKeyboardButton("📖 Guide", url="https://t.me/Social_IT_Service")
+            InlineKeyboardButton("✨ Support", callback_data="support_cb"),
+            InlineKeyboardButton("📖 Guide", callback_data="guide_cb")
         ],
         [
             InlineKeyboardButton("💬 Contact Owner", url="https://t.me/Social_IT_Service")
@@ -76,6 +73,17 @@ I’m **{(await client.get_me()).mention}**. Every grab could unlock a rare waif
         """,
         reply_markup=keyboard
     )
+
+
+# --------------------------------------- Callback Handlers --------------------------------------- #
+
+@app.on_callback_query(filters.regex("support_cb"))
+async def support_callback(client, callback_query: CallbackQuery):
+    await callback_query.answer("ဆက်သွယ်ရန် Link: https://t.me/Social_IT_Service", show_alert=True)
+
+@app.on_callback_query(filters.regex("guide_cb"))
+async def guide_callback(client, callback_query: CallbackQuery):
+    await callback_query.answer("လမ်းညွှန်ချက် Link: https://t.me/Social_IT_Service", show_alert=True)
 
 
 # --------------------------------------- Stats Command --------------------------------------- #
