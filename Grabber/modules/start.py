@@ -1,7 +1,7 @@
 import motor, sys, time
 from Grabber import app
 from config import OWNER_ID
-from pyrogram import filters, enums
+from pyrogram import filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from Grabber.core.mongo import usersdb, waifusdb, chatsdb
 
@@ -52,13 +52,12 @@ def time_formatter():
 
 @app.on_message(filters.command("start"))
 async def start(client, message):
-    # လိုချင်တဲ့ ခလုတ်နှစ်ခုကိုပဲ သပ်သပ်ရပ်ရပ် ထည့်သွင်းပေးထားခြင်း
     keyboard = InlineKeyboardMarkup([
         [
             InlineKeyboardButton("➕ Add Me To Your Group", url=f"https://t.me/{client.me.username}?startgroup=true")
         ],
         [
-            InlineKeyboardButton("💬 Contact Owner", url="https://t.me/Social_IT_Service")
+            InlineKeyboardButton("💬 Contact Owner", url="https://telegram.me/Social_IT_Service")
         ]
     ])
 
