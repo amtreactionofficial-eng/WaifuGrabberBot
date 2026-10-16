@@ -251,9 +251,24 @@ async def watcher(client, message):
 # ------------------------- Waifu Grab ------------------------- #
 
 @app.on_message(filters.command("grab") & filters.group)
-async def grab_waifu(_, message):
+async def grab_waifu(client, message):
     chat_id = message.chat.id
     user_id = message.from_user.id
+
+    # --- FORCE JOIN CHECK ---
+    try:
+        chat_username = config.SUPPORT_CHANNEL.split("/")[-1]
+        member = await client.get_chat_member(chat_username, user_id)
+        if member.status not in [enums.ChatMemberStatus.OWNER, enums.ChatMemberStatus.ADMINISTRATOR, enums.ChatMemberStatus.MEMBER]:
+            raise Exception("Not a member")
+    except Exception:
+        return await message.reply_text(
+            "⚠️ <b>ကျေးဇူးပြု၍ ကဒ်မကောက်ခင် ကျွန်ုပ်တို့၏ Official Group သို့ ဦးစွာ Join ပေးပါရန် မေတ္တာရပ်ခံအပ်ပါသည်။</b>",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("🔗 Group သို့ Join ရန်", url=config.SUPPORT_CHANNEL)]
+            ])
+        )
+    # ------------------------
 
     if len(message.command) < 2:
         return await message.reply_text("<b>Use it like this:</b> <code>/grab WaifuName</code>")
@@ -283,7 +298,3 @@ async def grab_waifu(_, message):
     if spawn[chat_id]["task"]:
         spawn[chat_id]["task"].cancel()
         spawn[chat_id]["task"] = None
-
-    
-
-
