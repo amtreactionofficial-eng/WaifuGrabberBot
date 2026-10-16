@@ -54,6 +54,7 @@ def time_formatter():
 
 @app.on_message(filters.command("start"))
 async def start(client, message):
+    # ခလုတ်တစ်ခုချင်းစီ သီးသန့်စီ အတန်းလိုက် ပေါ်စေရန် အကွက်အကွင်း မှန်ကန်စွာ ဖန်တီးထားခြင်း
     keyboard = InlineKeyboardMarkup([
         [
             InlineKeyboardButton("➕ Add Me To Your Group", url=f"https://t.me/{client.me.username}?startgroup=true")
@@ -67,7 +68,6 @@ async def start(client, message):
         ]
     ])
 
-    # ပုံမပါဘဲ စာသားသက်သက် ပို့ေအာင် ပြင်လိုက်ပါပြီ
     await message.reply_text(
         f"""
 Hello {message.from_user.mention} !
