@@ -57,7 +57,7 @@ async def start(client, message):
             InlineKeyboardButton("➕ Add Me To Your Group", url=f"https://t.me/{client.me.username}?startgroup=true")
         ],
         [
-            InlineKeyboardButton("💬 Contact Owner", url="https://telegram.me/Social_IT_Service")
+            InlineKeyboardButton("💬 Support Group", url="https://t.me/dvcardzone")
         ]
     ])
 
