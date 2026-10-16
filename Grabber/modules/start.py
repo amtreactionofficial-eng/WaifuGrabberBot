@@ -4,7 +4,6 @@ from config import OWNER_ID
 from pyrogram import filters, enums
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from Grabber.core.mongo import usersdb, waifusdb, chatsdb
-from Grabber.core import script
 
 # --------------------------------------- Chat Watcher --------------------------------------- #
 
@@ -55,25 +54,21 @@ def time_formatter():
 
 @app.on_message(filters.command("start"))
 async def start(client, message):
-    chat_id = message.chat.id
-    user_id = message.from_user.id
-
     keyboard = InlineKeyboardMarkup([
         [
             InlineKeyboardButton("➕ Add Me To Your Group", url=f"https://t.me/{client.me.username}?startgroup=true")
         ],
         [
-            InlineKeyboardButton("✨ Support", url=config.SUPPORT_CHANNEL if hasattr(config, "SUPPORT_CHANNEL") else "https://t.me/Social_IT_Service"),
+            InlineKeyboardButton("✨ Support", url="https://t.me/Social_IT_Service"),
             InlineKeyboardButton("📖 Guide", url="https://t.me/Social_IT_Service")
         ],
         [
-            # ဒီနေရာမှာ မင်းရဲ့ Telegram Username ကို ချိတ်ပေးထားပါတယ်
             InlineKeyboardButton("💬 Contact Owner", url="https://t.me/Social_IT_Service")
         ]
     ])
 
     await message.reply_photo(
-        photo="https://envs.sh/X1l.jpg",  # သို့မဟုတ် bot ရဲ့ ပုံလင့်ခ်
+        photo="https://envs.sh/X1l.jpg",
         caption=f"""
 Hello {message.from_user.mention} !
 
