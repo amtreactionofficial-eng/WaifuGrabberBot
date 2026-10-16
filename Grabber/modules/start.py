@@ -2,7 +2,7 @@ import motor, sys, time
 from Grabber import app
 from config import OWNER_ID
 from pyrogram import filters, enums
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from Grabber.core.mongo import usersdb, waifusdb, chatsdb
 
 # --------------------------------------- Chat Watcher --------------------------------------- #
@@ -52,13 +52,10 @@ def time_formatter():
 
 @app.on_message(filters.command("start"))
 async def start(client, message):
+    # လိုချင်တဲ့ ခလုတ်နှစ်ခုကိုပဲ သပ်သပ်ရပ်ရပ် ထည့်သွင်းပေးထားခြင်း
     keyboard = InlineKeyboardMarkup([
         [
             InlineKeyboardButton("➕ Add Me To Your Group", url=f"https://t.me/{client.me.username}?startgroup=true")
-        ],
-        [
-            InlineKeyboardButton("✨ Support", callback_data="support_cb"),
-            InlineKeyboardButton("📖 Guide", callback_data="guide_cb")
         ],
         [
             InlineKeyboardButton("💬 Contact Owner", url="https://t.me/Social_IT_Service")
@@ -73,17 +70,6 @@ I’m **{(await client.get_me()).mention}**. Every grab could unlock a rare waif
         """,
         reply_markup=keyboard
     )
-
-
-# --------------------------------------- Callback Handlers --------------------------------------- #
-
-@app.on_callback_query(filters.regex("support_cb"))
-async def support_callback(client, callback_query: CallbackQuery):
-    await callback_query.answer("ဆက်သွယ်ရန် Link: https://t.me/Social_IT_Service", show_alert=True)
-
-@app.on_callback_query(filters.regex("guide_cb"))
-async def guide_callback(client, callback_query: CallbackQuery):
-    await callback_query.answer("လမ်းညွှန်ချက် Link: https://t.me/Social_IT_Service", show_alert=True)
 
 
 # --------------------------------------- Stats Command --------------------------------------- #
