@@ -54,15 +54,13 @@ def time_formatter():
 
 @app.on_message(filters.command("start"))
 async def start(client, message):
-    # ခလုတ်တစ်ခုချင်းစီကို အတန်းတစ်တန်းစီ သီးသန့်စီ ဖြစ်အောင် အောက်ပါအတိုင်း အကွက်ခွဲပေးလိုက်ပါပြီ
+    # ခလုတ်အားလုံးကို url parameter သုံးပြီး သီးသန့်လင့်ခ်ချိတ်ပေးထားခြင်း
     keyboard = InlineKeyboardMarkup([
         [
             InlineKeyboardButton("➕ Add Me To Your Group", url=f"https://t.me/{client.me.username}?startgroup=true")
         ],
         [
-            InlineKeyboardButton("✨ Support", url="https://t.me/Social_IT_Service")
-        ],
-        [
+            InlineKeyboardButton("✨ Support", url="https://t.me/Social_IT_Service"),
             InlineKeyboardButton("📖 Guide", url="https://t.me/Social_IT_Service")
         ],
         [
