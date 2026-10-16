@@ -67,9 +67,9 @@ async def start(client, message):
         ]
     ])
 
-    await message.reply_photo(
-        photo="https://envs.sh/X1l.jpg",
-        caption=f"""
+    # ပုံမပါဘဲ စာသားသက်သက် ပို့ေအာင် ပြင်လိုက်ပါပြီ
+    await message.reply_text(
+        f"""
 Hello {message.from_user.mention} !
 
 I’m **{(await client.get_me()).mention}**. Every grab could unlock a rare waifu from the anime multiverse. Build your collection, trade smart, and rise through the ranks. Your journey to becoming the ultimate collector starts now.
